@@ -1679,7 +1679,7 @@ refreshStats(); // Initial load
                         return;
                     }
 
-                    const mahasiswaLabel = `${mahasiswaNim} - ${mahasiswaNama}`;
+                    const mahasiswaLabel = mahasiswaNim + ' - ' + mahasiswaNama;
                     selectedMahasiswa.set(id, {
                         id,
                         nim: mahasiswaNim,
@@ -1694,7 +1694,7 @@ refreshStats(); // Initial load
                     updateSearchResults();
                     
                     // Show success message
-                    showSuccessMessage(`${mahasiswaNama} berhasil ditambahkan`);
+                    showSuccessMessage(mahasiswaNama + ' berhasil ditambahkan');
                 }
 
                 // Update selected mahasiswa list
@@ -1713,17 +1713,17 @@ refreshStats(); // Initial load
                         const disabledClass = isOwner ? 'disabled' : '';
                         const ownerText = isOwner ? ' (Anda)' : '';
                         
-                        return `
-                            <div class="selected-mahasiswa-item ${ownerClass}" data-id="${mahasiswa.id}">
-                                <div class="selected-mahasiswa-info">
-                                    <div class="selected-mahasiswa-nim">${mahasiswa.nim}${ownerText}</div>
-                                    <div class="selected-mahasiswa-nama">${mahasiswa.nama}</div>
-                                </div>
-                                <button type="button" class="remove-mahasiswa-btn ${disabledClass}" data-mahasiswa-id="${mahasiswa.id}" ${isOwner ? 'disabled' : ''}>
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        `;
+                        return (
+                            '<div class="selected-mahasiswa-item ' + ownerClass + '" data-id="' + mahasiswa.id + '">' +
+                                '<div class="selected-mahasiswa-info">' +
+                                    '<div class="selected-mahasiswa-nim">' + mahasiswa.nim + ownerText + '</div>' +
+                                    '<div class="selected-mahasiswa-nama">' + mahasiswa.nama + '</div>' +
+                                '</div>' +
+                                '<button type="button" class="remove-mahasiswa-btn ' + disabledClass + '" data-mahasiswa-id="' + mahasiswa.id + '" ' + (isOwner ? 'disabled' : '') + '>' +
+                                    '<i class="fas fa-times"></i>' +
+                                '</button>' +
+                            '</div>'
+                        );
                     }).join('');
 
                     selectedMahasiswaList.innerHTML = selectedHtml;
@@ -1756,7 +1756,7 @@ refreshStats(); // Initial load
                     updateSelectedMahasiswaList();
                     updateSearchResults();
                     
-                    showSuccessMessage(`${mahasiswaNama} berhasil dihapus`);
+                    showSuccessMessage((mahasiswa ? mahasiswa.nama : 'Mahasiswa') + ' berhasil dihapus');
                 }
 
                 // Update search results (mahasiswa)
@@ -1775,7 +1775,7 @@ refreshStats(); // Initial load
                         }
                         
                         if (mahasiswaId === currentMahasiswaId) {
-                            nimDiv.textContent = `${item.dataset.nim} (Anda)`;
+                            nimDiv.textContent = item.dataset.nim + ' (Anda)';
                         }
                     });
 
@@ -1971,7 +1971,7 @@ refreshStats(); // Initial load
                     // Success message
                     const successMessage = document.createElement('div');
                     successMessage.className = 'success-message';
-                    successMessage.textContent = `✓ ${dosenNama} berhasil ditambahkan`;
+                    successMessage.textContent = '✓ ' + dosenNama + ' berhasil ditambahkan';
                     successMessage.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); z-index: 9999; font-weight: 600; animation: slideIn 0.3s ease;';
                     
                     document.body.appendChild(successMessage);
@@ -1997,17 +1997,17 @@ refreshStats(); // Initial load
                     }
 
                     const selectedHtml = Array.from(selectedDosen.values()).map(dosen => {
-                        return `
-                            <div class="selected-dosen-item" data-id="${dosen.id}">
-                                <div class="selected-dosen-info">
-                                    <div class="selected-dosen-nip">${dosen.nip}</div>
-                                    <div class="selected-dosen-nama">${dosen.nama}</div>
-                                </div>
-                                <button type="button" class="remove-dosen-btn" data-dosen-id="${dosen.id}">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        `;
+                        return (
+                            '<div class="selected-dosen-item" data-id="' + dosen.id + '">' +
+                                '<div class="selected-dosen-info">' +
+                                    '<div class="selected-dosen-nip">' + dosen.nip + '</div>' +
+                                    '<div class="selected-dosen-nama">' + dosen.nama + '</div>' +
+                                '</div>' +
+                                '<button type="button" class="remove-dosen-btn" data-dosen-id="' + dosen.id + '">' +
+                                    '<i class="fas fa-times"></i>' +
+                                '</button>' +
+                            '</div>'
+                        );
                     }).join('');
 
                     selectedDosenList.innerHTML = selectedHtml;
@@ -2034,7 +2034,7 @@ refreshStats(); // Initial load
                     updateSelectedDosenList();
                     updateDosenSearchResults();
                     
-                    showSuccessMessage(`${dosenNama} berhasil dihapus`);
+                    showSuccessMessage((dosen ? dosen.nama : 'Dosen') + ' berhasil dihapus');
                 }
 
                 // Update dosen search results selections
@@ -2153,7 +2153,7 @@ refreshStats(); // Initial load
                 function showSuccessMessage(message) {
                     const successMessage = document.createElement('div');
                     successMessage.className = 'success-message';
-                    successMessage.textContent = `✓ ${message}`;
+                    successMessage.textContent = '✓ ' + message;
                     successMessage.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); z-index: 9999; font-weight: 600; animation: slideIn 0.3s ease;';
                     
                     document.body.appendChild(successMessage);
@@ -2282,22 +2282,21 @@ refreshStats(); // Initial load
                     if (!tbody) return;
                     
                     const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td><input type="text" name="item_inspeksi[]" placeholder="Item inspeksi"></td>
-                        <td><textarea name="standar_kebersihan[]" placeholder="Standar kebersihan"></textarea></td>
-                        <td><textarea name="hasil_pemeriksaan[]" placeholder="Hasil pemeriksaan"></textarea></td>
-                        <td><input type="text" name="status[]" placeholder="Status"></td>
-                        <td>
-                            <select name="ok_ng[]">
-                                <option value="OK">OK</option>
-                                <option value="NG">NG</option>
-                            </select>
-                        </td>
-                        <td><textarea name="tindakan_korektif[]" placeholder="Tindakan korektif"></textarea></td>
-                        <td>
-                            <button type="button" class="btn-remove-inspection-row btn btn-sm btn-danger">Hapus</button>
-                        </td>
-                    `;
+                    newRow.innerHTML = '' +
+                        '<td><input type="text" name="item_inspeksi[]" placeholder="Item inspeksi"></td>' +
+                        '<td><textarea name="standar_kebersihan[]" placeholder="Standar kebersihan"></textarea></td>' +
+                        '<td><textarea name="hasil_pemeriksaan[]" placeholder="Hasil pemeriksaan"></textarea></td>' +
+                        '<td><input type="text" name="status[]" placeholder="Status"></td>' +
+                        '<td>' +
+                            '<select name="ok_ng[]">' +
+                                '<option value="OK">OK</option>' +
+                                '<option value="NG">NG</option>' +
+                            '</select>' +
+                        '</td>' +
+                        '<td><textarea name="tindakan_korektif[]" placeholder="Tindakan korektif"></textarea></td>' +
+                        '<td>' +
+                            '<button type="button" class="btn-remove-inspection-row btn btn-sm btn-danger">Hapus</button>' +
+                        '</td>';
                     
                     tbody.appendChild(newRow);
                     
@@ -2407,7 +2406,7 @@ refreshStats(); // Initial load
                         nama: currentMahasiswaNama,
                         isOwner: true
                     });
-                    addPpeSection(currentMahasiswaId, `${currentMahasiswaNim} - ${currentMahasiswaNama}`);
+                    addPpeSection(currentMahasiswaId, currentMahasiswaNim + ' - ' + currentMahasiswaNama);
                 }
 
                 // Initialize selected lists
@@ -2424,28 +2423,27 @@ refreshStats(); // Initial load
                         if (debugPanel && debugContent) {
                             debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
                             if (debugPanel.style.display === 'block') {
-                                debugContent.innerHTML = `
-                                    <p><strong>Selected Dosen IDs:</strong> ${Array.from(selectedDosen.keys()).join(', ') || 'None'}</p>
-                                    <p><strong>Selected Dosen Names:</strong> ${Array.from(selectedDosen.values()).map(d => d.nama).join(', ') || 'None'}</p>
-                                    <p><strong>Selected Mahasiswa IDs:</strong> ${Array.from(selectedMahasiswa.keys()).join(', ') || 'None'}</p>
-                                    <p><strong>Work Steps Count:</strong> ${document.querySelectorAll('.work-step-item').length}</p>
-                                    <p><strong>Inspection Areas Count:</strong> ${document.querySelectorAll('.inspection-area-item').length}</p>
-                                    <p><strong>Form Action:</strong> ${form.action}</p>
-                                    <p><strong>Form Method:</strong> ${form.method}</p>
-                                    <p><strong>Dosen Inputs in DOM:</strong> ${document.querySelectorAll('input[name="dosens[]"]').length}</p>
-                                    <p><strong>Mahasiswa Inputs in DOM:</strong> ${document.querySelectorAll('input[name="mahasiswas[]"]').length}</p>
-                                    <p><strong>Dosen Container:</strong> ${document.getElementById('dosenInputs') ? 'Found' : 'Not Found'}</p>
-                                    <p><strong>Selected Dosen Size:</strong> ${selectedDosen.size}</p>
-                                    <p><strong>Required Fields:</strong></p>
-                                    <ul>
-                                        <li>Semester: ${document.getElementById('semester')?.value || 'Empty'}</li>
-                                        <li>Mata Kuliah: ${document.getElementById('matakuliah')?.value || 'Empty'}</li>
-                                        <li>Kelas: ${document.getElementById('kelas')?.value || 'Empty'}</li>
-                                        <li>Nama Pekerjaan: ${document.getElementById('nama_pekerjaan')?.value || 'Empty'}</li>
-                                        <li>Lokasi: ${document.getElementById('lokasi_pekerjaan')?.value || 'Empty'}</li>
-                                        <li>Tanggal: ${document.getElementById('tanggal_pelaksanaan')?.value || 'Empty'}</li>
-                                    </ul>
-                                `;
+                                debugContent.innerHTML = '' +
+                                    '<p><strong>Selected Dosen IDs:</strong> ' + (Array.from(selectedDosen.keys()).join(', ') || 'None') + '</p>' +
+                                    '<p><strong>Selected Dosen Names:</strong> ' + (Array.from(selectedDosen.values()).map(d => d.nama).join(', ') || 'None') + '</p>' +
+                                    '<p><strong>Selected Mahasiswa IDs:</strong> ' + (Array.from(selectedMahasiswa.keys()).join(', ') || 'None') + '</p>' +
+                                    '<p><strong>Work Steps Count:</strong> ' + document.querySelectorAll('.work-step-item').length + '</p>' +
+                                    '<p><strong>Inspection Areas Count:</strong> ' + document.querySelectorAll('.inspection-area-item').length + '</p>' +
+                                    '<p><strong>Form Action:</strong> ' + form.action + '</p>' +
+                                    '<p><strong>Form Method:</strong> ' + form.method + '</p>' +
+                                    '<p><strong>Dosen Inputs in DOM:</strong> ' + document.querySelectorAll('input[name="dosens[]"]').length + '</p>' +
+                                    '<p><strong>Mahasiswa Inputs in DOM:</strong> ' + document.querySelectorAll('input[name="mahasiswas[]"]').length + '</p>' +
+                                    '<p><strong>Dosen Container:</strong> ' + (document.getElementById('dosenInputs') ? 'Found' : 'Not Found') + '</p>' +
+                                    '<p><strong>Selected Dosen Size:</strong> ' + selectedDosen.size + '</p>' +
+                                    '<p><strong>Required Fields:</strong></p>' +
+                                    '<ul>' +
+                                        '<li>Semester: ' + (document.getElementById('semester')?.value || 'Empty') + '</li>' +
+                                        '<li>Mata Kuliah: ' + (document.getElementById('matakuliah')?.value || 'Empty') + '</li>' +
+                                        '<li>Kelas: ' + (document.getElementById('kelas')?.value || 'Empty') + '</li>' +
+                                        '<li>Nama Pekerjaan: ' + (document.getElementById('nama_pekerjaan')?.value || 'Empty') + '</li>' +
+                                        '<li>Lokasi: ' + (document.getElementById('lokasi_pekerjaan')?.value || 'Empty') + '</li>' +
+                                        '<li>Tanggal: ' + (document.getElementById('tanggal_pelaksanaan')?.value || 'Empty') + '</li>' +
+                                    '</ul>';
                             }
                         }
                     });
@@ -2581,11 +2579,7 @@ refreshStats(); // Initial load
                 // Show user-friendly error message
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'alert alert-danger';
-                errorDiv.innerHTML = `
-                    <i class="fas fa-exclamation-triangle"></i> 
-                    Terjadi kesalahan saat memuat halaman. Silakan refresh halaman ini.
-                    <br><small>Error: ${error.message}</small>
-                `;
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Terjadi kesalahan saat memuat halaman. Silakan refresh halaman ini.<br><small>Error: ' + error.message + '</small>';
                 errorDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; max-width: 500px; background: rgba(220, 53, 69, 0.9); color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
                 document.body.appendChild(errorDiv);
                 
