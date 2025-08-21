@@ -1978,19 +1978,7 @@ refreshStats(); // Initial load
                     const successMessage = document.createElement('div');
                     successMessage.className = 'success-message';
                     successMessage.textContent = `✓ ${dosenNama} berhasil ditambahkan`;
-                    successMessage.style.cssText = `
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: linear-gradient(45deg, #27ae60, #2ecc71);
-                        color: white;
-                        padding: 10px 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-                        z-index: 9999;
-                        font-weight: 600;
-                        animation: slideIn 0.3s ease;
-                    `;
+                    successMessage.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); z-index: 9999; font-weight: 600; animation: slideIn 0.3s ease;';
                     
                     document.body.appendChild(successMessage);
                     
@@ -2171,19 +2159,7 @@ refreshStats(); // Initial load
                     const successMessage = document.createElement('div');
                     successMessage.className = 'success-message';
                     successMessage.textContent = `✓ ${message}`;
-                    successMessage.style.cssText = `
-                        position: fixed;
-                        top: 20px;
-                        right: 20px;
-                        background: linear-gradient(45deg, #27ae60, #2ecc71);
-                        color: white;
-                        padding: 10px 20px;
-                        border-radius: 8px;
-                        box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-                        z-index: 9999;
-                        font-weight: 600;
-                        animation: slideIn 0.3s ease;
-                    `;
+                    successMessage.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(45deg, #27ae60, #2ecc71); color: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3); z-index: 9999; font-weight: 600; animation: slideIn 0.3s ease;';
                     
                     document.body.appendChild(successMessage);
                     
@@ -2615,19 +2591,7 @@ refreshStats(); // Initial load
                     Terjadi kesalahan saat memuat halaman. Silakan refresh halaman ini.
                     <br><small>Error: ${error.message}</small>
                 `;
-                errorDiv.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    z-index: 9999;
-                    max-width: 500px;
-                    background: rgba(220, 53, 69, 0.9);
-                    color: white;
-                    padding: 15px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                `;
+                errorDiv.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; max-width: 500px; background: rgba(220, 53, 69, 0.9); color: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);';
                 document.body.appendChild(errorDiv);
                 
                 setTimeout(() => {
