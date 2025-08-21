@@ -1302,7 +1302,7 @@
                         <input type="hidden" id="currentMahasiswaNama" value="{{ $currentMahasiswa->nama ?? '' }}">
                         
                         <!-- Hidden inputs untuk mahasiswa dan dosen yang dipilih -->
-                        <input type="hidden" name="mahasiswas[]" value="{{ $currentMahasiswa->id ?? '' }}">
+                        <!-- mahasiswas[] hidden input removed; handled by JS via #mahasiswaInputs -->
                     </div>
                 </div>
 
@@ -1654,7 +1654,7 @@ refreshStats(); // Initial load
                     
                     let inputsHtml = '';
                     selectedMahasiswa.forEach(m => {
-                        inputsHtml += `<input type="hidden" name="mahasiswas[]" value="${m.id}">`;
+                        inputsHtml += '<input type="hidden" name="mahasiswas[]" value="' + m.id + '">';
                     });
                     container.innerHTML = inputsHtml;
                 }
@@ -1666,7 +1666,7 @@ refreshStats(); // Initial load
                     
                     let inputsHtml = '';
                     selectedDosen.forEach(d => {
-                        inputsHtml += `<input type="hidden" name="dosens[]" value="${d.id}">`;
+                        inputsHtml += '<input type="hidden" name="dosens[]" value="' + d.id + '">';
                     });
                     container.innerHTML = inputsHtml;
                 }
@@ -1810,7 +1810,7 @@ refreshStats(); // Initial load
                     searchResults.innerHTML = '<div class="no-results loading">Mencari...</div>';
                     searchResults.classList.add('show');
 
-                    fetch(`{{ route('api.search.mahasiswa') }}?search=${encodeURIComponent(searchTerm)}`)
+                    fetch('{{ route('api.search.mahasiswa') }}?search=' + encodeURIComponent(searchTerm))
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
@@ -1889,7 +1889,7 @@ refreshStats(); // Initial load
                     dosenSearchResults.innerHTML = '<div class="no-results loading">Mencari...</div>';
                     dosenSearchResults.classList.add('show');
 
-                    const url = `{{ route('api.search.dosen') }}?search=${encodeURIComponent(searchTerm)}`;
+                                            const url = '{{ route('api.search.dosen') }}?search=' + encodeURIComponent(searchTerm);
                     
                     fetch(url)
                         .then(response => {
@@ -2107,6 +2107,7 @@ refreshStats(); // Initial load
                         const apdCheckboxes = ppeDiv.querySelectorAll('.ppe-checkbox');
                         apdCheckboxes.forEach(checkbox => {
                             checkbox.setAttribute('data-mahasiswa-id', mahasiswaId);
+                            checkbox.value = mahasiswaId;
                         });
                         
                         // Check if this is the current mahasiswa (owner)
